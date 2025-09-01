@@ -39,11 +39,11 @@ class Author
      * @var Collection<int, Book>
      */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
-    private Collection $book;
+    private Collection $books;
 
     public function __construct()
     {
-        $this->book = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,7 +59,6 @@ class Author
     public function setFirstName(string $firstName): static
     {
         $this->firstName = $firstName;
-
         return $this;
     }
 
@@ -71,7 +70,6 @@ class Author
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
@@ -83,37 +81,44 @@ class Author
     public function setCountry(string $country): static
     {
         $this->country = $country;
-
         return $this;
     }
 
     /**
      * @return Collection<int, Book>
      */
-    public function getBook(): Collection
+    public function getBooks(): Collection
     {
-        return $this->book;
+        return $this->books;
     }
 
     public function addBook(Book $book): static
     {
-        if (!$this->book->contains($book)) {
-            $this->book->add($book);
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
             $book->setAuthor($this);
         }
-
         return $this;
     }
 
     public function removeBook(Book $book): static
     {
-        if ($this->book->removeElement($book)) {
+        if ($this->books->removeElement($book)) {
             // set the owning side to null (unless already changed)
             if ($book->getAuthor() === $this) {
                 $book->setAuthor(null);
             }
         }
-
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    public function getFullName(): string
+    {
+        return trim($this->firstName . ' ' . $this->lastName);
     }
 }
