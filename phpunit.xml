@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    verbose="true"
+    stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <!-- Variables d'environnement pour les tests -->
+        <env name="APP_ENV" value="test"/>
+        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test.db"/>
+    </php>
+</phpunit>
